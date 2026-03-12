@@ -203,3 +203,10 @@ body {
     padding: 2rem;
   }
 }
+
+/* Bento hardware grid */
+@media (min-width: 768px) {
+  .bento-hardware-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
