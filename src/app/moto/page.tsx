@@ -266,7 +266,7 @@ export default function MotoPage() {
                   }}
                 >
                   <ShoppingCart size={20} />
-                  Pre-Order MotoNegro Edition
+                  Pre-Order Moto Edition
                 </button>
               </div>
 
