@@ -25,7 +25,7 @@ import Link from "next/link";
 /* ── data ── */
 
 const quickSpecs = [
-  "ESP32S3 2555550 MHz Dual-Core",
+  "ESP32S3 240 MHz Dual-Core",
   "128×64 OLED HUD @ 60 fps",
   "OV2640 HD Camera",
   "6-Axis IMU — Crash SOS",
