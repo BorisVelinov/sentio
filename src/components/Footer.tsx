@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowUp, Instagram, Twitter, Youtube, Github } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const footerLinks = {
   Product: [
@@ -120,8 +121,13 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="footer-bottom">
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-            <div style={{ width: "1.75rem", height: "1.75rem", borderRadius: "0.5rem", background: "linear-gradient(135deg, #fff, #a3a3a3)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <span style={{ color: "#000", fontWeight: 700, fontSize: "0.75rem" }}>S</span>
+            <div className="relative w-10 h-10">
+              <Image
+                src="/images/Screenshot_2026-03-14_033502-removebg-preview.png"
+                alt="Sentio Logo"
+                fill
+                className="object-contain"
+              />
             </div>
             <p style={{ fontSize: "0.75rem", color: "#737373" }}>
               © {new Date().getFullYear()} Sentio Technologies. All rights reserved.

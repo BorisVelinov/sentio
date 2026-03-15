@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const navLinks = [
   { label: "Technology", href: "/#technology" },
@@ -37,8 +38,14 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo — left */}
           <Link href="/" className="flex items-center gap-2.5 group" style={{ flexShrink: 0 }}>
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-white to-neutral-400 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <span className="text-black font-bold text-sm">S</span>
+            <div className="relative w-14 h-14 group-hover:scale-110 transition-transform duration-300">
+              <Image
+                src="/images/Screenshot_2026-03-14_033502-removebg-preview.png"
+                alt="Sentio Logo"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
             <span className="text-lg font-semibold tracking-tight">Sentio</span>
           </Link>
