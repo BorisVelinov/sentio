@@ -1,257 +1,208 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Bluetooth,
-  Wifi,
-  Gauge,
-  Activity,
-  Video,
-  MapPin,
-  ArrowLeft,
-  Layout,
-  Sliders,
-  Film,
-  Share2,
-  Smartphone,
-  Cloud,
-  Download,
-  Palette,
-} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
-const stats = [
-  { icon: Gauge, label: "Top Speed", value: "87 km/h", color: "#38bdf8" },
-  { icon: Activity, label: "Max G-Force", value: "2.4 G", color: "#fbbf24" },
-  { icon: MapPin, label: "Distance", value: "42.3 km", color: "#34d399" },
-  { icon: Video, label: "Recordings", value: "12 clips", color: "#a78bfa" },
-];
-
-const features = [
-  "Real-time sync over BLE 5.0 & Wi-Fi Direct",
-  "Automatic camera footage transfer & backup",
-  "Custom HUD layout editor with drag-and-drop",
-  "Emergency contact & SOS configuration",
-  "Ride history with GPS heatmaps & elevation profiles",
-  "Over-the-air firmware updates for your goggles",
-  "Session comparison across multiple rides",
-];
-
-const hudWidgets = [
-  { name: "Speed", description: "Current ground speed from GPS in km/h or mph", icon: Gauge, default: true },
-  { name: "G-Force", description: "Real-time resultant G-force from the LSM6DSO IMU", icon: Activity, default: true },
-  { name: "Altitude", description: "Barometric altitude with ±1 m precision", icon: MapPin, default: false },
-  { name: "Temperature", description: "Ambient temp and calculated wind chill", icon: Sliders, default: false },
-  { name: "Lap Timer", description: "GPS-based automatic lap timing with delta", icon: Layout, default: false },
-  { name: "Air-Time", description: "Jump hang-time calculated from IMU free-fall detection", icon: Activity, default: false },
-];
-
-const hudPresets = [
-  { name: "Race", widgets: ["Speed", "Lap Timer", "G-Force"], accent: "#f43f5e", description: "Optimized for competitive racing — speed and timing front and center." },
-  { name: "Freeride", widgets: ["Altitude", "Temperature", "Air-Time"], accent: "#38bdf8", description: "Built for backcountry sessions — altitude, conditions, and airtime." },
-  { name: "Training", widgets: ["Speed", "G-Force", "Altitude"], accent: "#34d399", description: "All the data you need to track progression and push limits safely." },
-];
-
-const overlayFeatures = [
-  {
-    icon: Film,
-    title: "Auto-Sync Footage",
-    description:
-      "When your goggles connect to the app via Wi-Fi Direct, recorded footage transfers automatically in the background — no manual file management, no SD cards, no cables. The OV2640 camera captures at 1600×1200 (15 fps) or 800×600 (30 fps), and the app stores everything in your local session library organized by date and location.",
-  },
-  {
-    icon: Palette,
-    title: "Telemetry Overlay Engine",
-    description:
-      "The Sentio App's proprietary overlay engine composites your telemetry data directly onto your video footage at the frame level. Speed, G-force, altitude, and GPS position are time-synced with sub-100ms accuracy to each video frame. Choose from 5 overlay styles — minimal HUD, full dashboard, speedometer-only, cinematic lower-third, and custom — each designed to look professional without obscuring the action.",
-  },
-  {
-    icon: Share2,
-    title: "One-Tap Social Export",
-    description:
-      "Export your overlaid clips in Instagram Reel, TikTok, or YouTube formats with a single tap. The app automatically crops, compresses, and applies the correct aspect ratio (9:16, 1:1, or 16:9) while maintaining maximum quality. Your speed, G-force, and location data are baked into the video — giving your social content the same professional telemetry overlay you see in MotoGP broadcasts.",
-  },
-  {
-    icon: Cloud,
-    title: "Cloud Backup & Session Sharing",
-    description:
-      "Optionally, back up your sessions to Sentio Cloud (included free — no subscription). Share session links with friends, coaches, or social media. Recipients can view your ride on an interactive 3D map with speed-colored GPS tracks, elevation profiles, and embedded video clips — all without installing the app.",
-  },
-];
+import {
+  MapPin, Radio, Gauge, Shield, Smartphone, Zap, ArrowRight,
+  AlertTriangle, Timer, Users, MessageSquare,
+} from "lucide-react";
 
 const fadeUp = {
   initial: { opacity: 0, y: 40 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" as const },
+  viewport: { once: true, margin: "-60px" as const },
 };
+
+const appFeatures = [
+  {
+    icon: Gauge,
+    title: "Passive Stat Tracking",
+    description: "Ditch the 'Start/Stop' workout button. Sentio passively tracks your entire day in the background — top speed, airtime, vertical drop, and yes, your worst wipeouts.",
+  },
+  {
+    icon: MapPin,
+    title: "3D Squad Radar",
+    description: "Premium 3D terrain maps adapt instantly for Snow or Dirt. See every rider in your crew in real-time. No more circling the parking lot wondering where your buddy dropped.",
+  },
+  {
+    icon: AlertTriangle,
+    title: "Hazard Warnings",
+    description: "Waze-style community hazard system for the mountains and trails. Ice patches, fallen trees, blind drops — tagged by riders who hit them first so you don't have to.",
+  },
+  {
+    icon: MessageSquare,
+    title: "Glove-Friendly Walkie-Talkie",
+    description: "Voice-to-massive-text-bubble messaging. Hit the puck button, bark your message, and it arrives as a giant readable text on your crew's screens. Works with frozen fingers.",
+  },
+  {
+    icon: Timer,
+    title: "Session Analytics",
+    description: "Every run automatically logged with speed, altitude, G-force, and GPS data at 10 Hz. Replay your day frame-by-frame with telemetry overlays. Post-ride bragging rights, backed by data.",
+  },
+  {
+    icon: Users,
+    title: "Crew Management",
+    description: "Create ride crews, share live locations, and set meetup pins on the terrain map. Emergency SOS broadcasts to your entire crew with GPS coordinates if someone goes down.",
+  },
+];
 
 export default function AppPage() {
   return (
-    <div style={{ minHeight: "100vh", backgroundColor: "#000" }}>
-      {/* ───── HERO SECTION ───── */}
-      <section style={{ paddingTop: "6rem", paddingBottom: "3rem", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 800, height: 800, borderRadius: "50%", background: "rgba(255,255,255,0.01)", filter: "blur(100px)", pointerEvents: "none" }} />
+    <div style={{ minHeight: "100vh", background: "var(--bg-primary)" }}>
+      {/* ═══ HERO ═══ */}
+      <section
+        style={{
+          position: "relative",
+          overflow: "hidden",
+          paddingTop: "8rem",
+          paddingBottom: "4rem",
+        }}
+      >
+        {/* Background glow */}
+        <div style={{ position: "absolute", top: "20%", left: "50%", transform: "translate(-50%, -50%)", width: "800px", height: "800px", borderRadius: "50%", background: "radial-gradient(circle, var(--snow-glow) 0%, transparent 60%)", filter: "blur(120px)", pointerEvents: "none" }} />
 
-        <div className="container-main" style={{ position: "relative", zIndex: 10 }}>
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} style={{ marginBottom: "3rem" }}>
-            <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontSize: "0.875rem", color: "#737373", textDecoration: "none" }}>
-              <ArrowLeft size={16} /> Back to Home
-            </Link>
-          </motion.div>
+        <div className="container-main" style={{ position: "relative", zIndex: 5 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "3rem", alignItems: "center" }} className="product-hero-grid">
+            {/* Text */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  padding: "0.5rem 1rem",
+                  borderRadius: "9999px",
+                  background: "var(--surface)",
+                  border: "1px solid var(--border)",
+                  marginBottom: "1.5rem",
+                  fontSize: "0.75rem",
+                  fontWeight: 600,
+                  color: "var(--snow-accent)",
+                  letterSpacing: "0.05em",
+                  textTransform: "uppercase",
+                }}
+              >
+                <Smartphone size={14} />
+                Sentio App
+              </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }} style={{ textAlign: "center", marginBottom: "5rem" }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", marginBottom: "1rem" }}>
-              <Bluetooth style={{ color: "#38bdf8" }} size={18} />
-              <p style={{ fontSize: "0.875rem", textTransform: "uppercase", letterSpacing: "0.3em", color: "#737373" }}>Connected</p>
-              <Wifi style={{ color: "#38bdf8" }} size={18} />
-            </div>
-            <h1 style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
-              Your Ride.{" "}
-              <span style={{ background: "linear-gradient(90deg, #fff, #a3a3a3)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Your Data.</span>
-            </h1>
-            <p style={{ marginTop: "1.5rem", color: "#a3a3a3", fontSize: "1.125rem", maxWidth: "48rem", margin: "1.5rem auto 0", fontWeight: 300, lineHeight: 1.7 }}>
-              The Sentio App is the command center for your goggles. It syncs seamlessly over Bluetooth Low Energy 5.0 and Wi-Fi Direct, giving you complete control over your HUD layout, access to every ride&apos;s telemetry data, and the tools to transform raw footage into shareable content with professional-grade overlays — all completely free, no subscription required.
-            </p>
-          </motion.div>
+              <h1 style={{ fontSize: "clamp(2.5rem, 6vw, 4rem)", fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.05, color: "var(--text-primary)", fontFamily: "var(--font-display)", marginBottom: "1.25rem" }}>
+                The Always-On<br />
+                <span className="gradient-text-snow">Social Radar</span>
+              </h1>
 
-          {/* Phone + Stats */}
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: "4rem", marginBottom: "5rem" }}>
-            <motion.div {...fadeUp} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] as const }} style={{ flexShrink: 0 }}>
-              <div style={{ position: "relative" }}>
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(56,189,248,0.1), transparent, rgba(245,158,11,0.1))", borderRadius: "3rem", filter: "blur(32px)", transform: "scale(1.1)" }} />
-                <Image src="/images/app-mockup.png" alt="Sentio Smartphone App" width={400} height={800} style={{ position: "relative", zIndex: 10, width: "280px", height: "auto", objectFit: "contain", filter: "drop-shadow(0 30px 60px rgba(0,0,0,0.5))" }} />
+              <p style={{ fontSize: "1.125rem", color: "var(--text-secondary)", lineHeight: 1.7, fontWeight: 300, maxWidth: "500px", marginBottom: "2rem" }}>
+                A tactical, real-time HUD built for extreme environments. Passively tracks your day, maps your squad on premium 3D terrain, and keeps everyone alive with community hazard alerts.
+              </p>
+
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+                <Link
+                  href="/#goggles"
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: "0.5rem",
+                    padding: "0.875rem 1.75rem", borderRadius: "9999px",
+                    background: "var(--accent-primary)", color: "var(--text-inverse)",
+                    fontWeight: 600, fontSize: "0.875rem", textDecoration: "none",
+                  }}
+                >
+                  Pair with Goggles <ArrowRight size={16} />
+                </Link>
+                <Link
+                  href="#features"
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: "0.5rem",
+                    padding: "0.875rem 1.75rem", borderRadius: "9999px",
+                    background: "var(--surface-elevated)", border: "1px solid var(--border)",
+                    color: "var(--text-primary)", fontWeight: 600, fontSize: "0.875rem",
+                    textDecoration: "none",
+                  }}
+                >
+                  See Features
+                </Link>
               </div>
             </motion.div>
 
-            <div style={{ width: "100%", maxWidth: "480px" }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "2.5rem" }}>
-                {stats.map((stat, i) => {
-                  const Icon = stat.icon;
-                  return (
-                    <motion.div key={stat.label} {...fadeUp} transition={{ delay: 0.1 + i * 0.1, duration: 0.6 }} style={{ padding: "1.25rem", borderRadius: "1rem", background: "linear-gradient(180deg, rgba(64,64,64,0.2), rgba(23,23,23,0.2))", border: "1px solid rgba(255,255,255,0.04)", textAlign: "center" }}>
-                      <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.5rem" }}>
-                        <Icon style={{ color: stat.color }} size={20} />
-                      </div>
-                      <p style={{ fontSize: "1.5rem", fontWeight: 700, color: stat.color }}>{stat.value}</p>
-                      <p style={{ fontSize: "0.75rem", color: "#737373", marginTop: "0.25rem" }}>{stat.label}</p>
-                    </motion.div>
-                  );
-                })}
+            {/* App mockup */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.3 }}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <div style={{ maxWidth: "280px" }} className="animate-float">
+                <Image
+                  src="/images/app-mockup.png"
+                  alt="Sentio App showing real-time 3D squad map"
+                  width={400}
+                  height={800}
+                  priority
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: "2rem",
+                    filter: "drop-shadow(0 30px 60px rgba(56,189,248,0.2))",
+                  }}
+                />
               </div>
-
-              <motion.div {...fadeUp} transition={{ delay: 0.4, duration: 0.8 }} style={{ display: "flex", flexDirection: "column", gap: "0.875rem", marginBottom: "2rem" }}>
-                {features.map((feature, i) => (
-                  <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
-                    <div style={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: "#38bdf8", flexShrink: 0, marginTop: "0.5rem" }} />
-                    <p style={{ fontSize: "0.875rem", color: "#d4d4d4", lineHeight: 1.6 }}>{feature}</p>
-                  </div>
-                ))}
-              </motion.div>
-
-              <motion.div {...fadeUp} transition={{ delay: 0.6, duration: 0.8 }} style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-                <button style={{ flex: "1 1 200px", padding: "0.875rem", borderRadius: "0.75rem", backgroundColor: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.06)", fontSize: "0.875rem", fontWeight: 500, color: "#fff", cursor: "pointer" }}>📱 Download for iOS</button>
-                <button style={{ flex: "1 1 200px", padding: "0.875rem", borderRadius: "0.75rem", backgroundColor: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.06)", fontSize: "0.875rem", fontWeight: 500, color: "#fff", cursor: "pointer" }}>🤖 Download for Android</button>
-              </motion.div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ───── HUD CUSTOMIZER ───── */}
-      <section style={{ paddingTop: "5rem", paddingBottom: "5rem", background: "linear-gradient(180deg, #000 0%, #0a0a0a 50%, #000 100%)", position: "relative" }}>
-        <div className="container-main" style={{ position: "relative", zIndex: 10 }}>
-          <motion.div {...fadeUp} transition={{ duration: 0.8 }} style={{ textAlign: "center", marginBottom: "4rem" }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", backgroundColor: "rgba(167,139,250,0.1)", border: "1px solid rgba(167,139,250,0.2)", padding: "0.5rem 1rem", borderRadius: "9999px", marginBottom: "1.5rem" }}>
-              <Layout style={{ color: "#a78bfa" }} size={14} />
-              <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.2em", color: "#a78bfa", fontWeight: 600 }}>HUD Editor</span>
-            </div>
-            <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)", fontWeight: 700, letterSpacing: "-0.02em", marginBottom: "1.5rem" }}>
-              Your Display,{" "}
-              <span style={{ background: "linear-gradient(90deg, #a78bfa, #c084fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Your Rules</span>
-            </h2>
-            <p style={{ color: "#a3a3a3", fontSize: "1.125rem", maxWidth: "48rem", marginLeft: "auto", marginRight: "auto", fontWeight: 300, lineHeight: 1.7 }}>
-              The 128×64 OLED display is divided into configurable zones. Drag and drop the stats you care about, hide the ones you don&apos;t, and save custom presets for different riding styles. Every change syncs to your goggles over BLE in under 2 seconds.
-            </p>
-          </motion.div>
-
-          {/* Widgets Grid */}
-          <div style={{ maxWidth: "800px", margin: "0 auto 3rem" }}>
-            <motion.div {...fadeUp} transition={{ duration: 0.8 }} style={{ marginBottom: "1rem" }}>
-              <p style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.2em", color: "#737373", marginBottom: "1rem" }}>Available Widgets</p>
-            </motion.div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 220px), 1fr))", gap: "1rem" }}>
-              {hudWidgets.map((widget, i) => {
-                const Icon = widget.icon;
-                return (
-                  <motion.div key={widget.name} {...fadeUp} transition={{ duration: 0.6, delay: i * 0.08 }} style={{ padding: "1.25rem", borderRadius: "1rem", background: widget.default ? "rgba(167,139,250,0.06)" : "rgba(255,255,255,0.02)", border: `1px solid ${widget.default ? "rgba(167,139,250,0.15)" : "rgba(255,255,255,0.05)"}`, position: "relative" }}>
-                    {widget.default && (
-                      <span style={{ position: "absolute", top: "0.75rem", right: "0.75rem", fontSize: "0.625rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "#a78bfa", backgroundColor: "rgba(167,139,250,0.15)", padding: "0.2rem 0.5rem", borderRadius: "9999px" }}>Default</span>
-                    )}
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.5rem" }}>
-                      <Icon style={{ color: widget.default ? "#a78bfa" : "#737373" }} size={18} />
-                      <span style={{ fontSize: "0.9375rem", fontWeight: 600, color: "#fff" }}>{widget.name}</span>
-                    </div>
-                    <p style={{ fontSize: "0.8125rem", color: "#a3a3a3", lineHeight: 1.6 }}>{widget.description}</p>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Presets */}
-          <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-            <motion.div {...fadeUp} transition={{ duration: 0.8 }}>
-              <p style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.2em", color: "#737373", marginBottom: "1rem" }}>Layout Presets</p>
-            </motion.div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 200px), 1fr))", gap: "1rem" }}>
-              {hudPresets.map((preset, i) => (
-                <motion.div key={preset.name} {...fadeUp} transition={{ duration: 0.6, delay: i * 0.1 }} style={{ padding: "1.5rem", borderRadius: "1.25rem", backgroundColor: `${preset.accent}08`, border: `1px solid ${preset.accent}20` }}>
-                  <h4 style={{ fontSize: "1.125rem", fontWeight: 700, color: preset.accent, marginBottom: "0.5rem" }}>{preset.name}</h4>
-                  <p style={{ fontSize: "0.8125rem", color: "#a3a3a3", lineHeight: 1.6, marginBottom: "1rem" }}>{preset.description}</p>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.375rem" }}>
-                    {preset.widgets.map((w) => (
-                      <span key={w} style={{ fontSize: "0.6875rem", color: preset.accent, backgroundColor: `${preset.accent}15`, padding: "0.25rem 0.625rem", borderRadius: "9999px" }}>{w}</span>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+      {/* ═══ KEY STATS ═══ */}
+      <section style={{ background: "var(--surface)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", padding: "3rem 0" }}>
+        <div className="container-main">
+          <div className="stats-bar">
+            {[
+              { value: "10 Hz", label: "GPS Tracking" },
+              { value: "3D", label: "Terrain Maps" },
+              { value: "Live", label: "Squad Radar" },
+              { value: "0", label: "Buttons to Start" },
+            ].map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+                style={{ textAlign: "center" }}
+              >
+                <p style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 800, color: "var(--snow-accent)", fontFamily: "var(--font-display)" }}>{stat.value}</p>
+                <p style={{ fontSize: "0.8125rem", fontWeight: 500, color: "var(--text-secondary)", marginTop: "0.25rem" }}>{stat.label}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ───── EXPORT & OVERLAY ───── */}
-      <section style={{ paddingTop: "5rem", paddingBottom: "5rem", position: "relative" }}>
-        <div style={{ position: "absolute", top: "30%", right: "-5%", width: 500, height: 500, borderRadius: "50%", background: "rgba(56,189,248,0.03)", filter: "blur(120px)", pointerEvents: "none" }} />
-
-        <div className="container-main" style={{ position: "relative", zIndex: 10 }}>
+      {/* ═══ FEATURES GRID ═══ */}
+      <section id="features" className="section-responsive">
+        <div className="container-main">
           <motion.div {...fadeUp} transition={{ duration: 0.8 }} style={{ textAlign: "center", marginBottom: "4rem" }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", backgroundColor: "rgba(56,189,248,0.1)", border: "1px solid rgba(56,189,248,0.2)", padding: "0.5rem 1rem", borderRadius: "9999px", marginBottom: "1.5rem" }}>
-              <Film style={{ color: "#38bdf8" }} size={14} />
-              <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.2em", color: "#38bdf8", fontWeight: 600 }}>Video Engine</span>
-            </div>
-            <h2 style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)", fontWeight: 700, letterSpacing: "-0.02em", marginBottom: "1.5rem" }}>
-              Export &{" "}
-              <span style={{ background: "linear-gradient(90deg, #38bdf8, #67e8f9)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Overlay</span>
+            <p style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.3em", color: "var(--text-tertiary)", marginBottom: "0.75rem", fontWeight: 600 }}>Features</p>
+            <h2 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 800, letterSpacing: "-0.03em", color: "var(--text-primary)", fontFamily: "var(--font-display)" }}>
+              Everything Your Squad Needs
             </h2>
-            <p style={{ color: "#a3a3a3", fontSize: "1.125rem", maxWidth: "48rem", marginLeft: "auto", marginRight: "auto", fontWeight: 300, lineHeight: 1.7 }}>
-              Your onboard camera captures the action. The Sentio App composites your telemetry data directly onto the footage — speed gauges, G-force meters, route maps — giving your social content the same production quality as a professional broadcast, rendered locally on your phone in minutes.
-            </p>
           </motion.div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", maxWidth: "800px", margin: "0 auto" }}>
-            {overlayFeatures.map((f, i) => {
-              const Icon = f.icon;
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))", gap: "1.25rem" }}>
+            {appFeatures.map((feature, i) => {
+              const Icon = feature.icon;
               return (
-                <motion.div key={f.title} {...fadeUp} transition={{ duration: 0.8, delay: i * 0.1 }} className="card-responsive" style={{ borderRadius: "1.5rem", background: "linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
-                    <div style={{ width: "2.75rem", height: "2.75rem", borderRadius: "0.875rem", backgroundColor: "rgba(56,189,248,0.1)", border: "1px solid rgba(56,189,248,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                      <Icon style={{ color: "#38bdf8" }} size={18} />
-                    </div>
-                    <h3 style={{ fontSize: "1.125rem", fontWeight: 700, letterSpacing: "-0.01em" }}>{f.title}</h3>
+                <motion.div key={feature.title} {...fadeUp} transition={{ duration: 0.8, delay: i * 0.08 }} className="bento-card">
+                  <div style={{ width: "3rem", height: "3rem", borderRadius: "0.875rem", background: "rgba(56,189,248,0.1)", border: "1px solid rgba(56,189,248,0.15)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.25rem" }}>
+                    <Icon size={20} style={{ color: "var(--snow-accent)" }} />
                   </div>
-                  <p style={{ color: "#a3a3a3", fontSize: "0.875rem", lineHeight: 1.8 }}>{f.description}</p>
+                  <h3 style={{ fontSize: "1.125rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.75rem", fontFamily: "var(--font-display)" }}>{feature.title}</h3>
+                  <p style={{ color: "var(--text-secondary)", fontSize: "0.875rem", lineHeight: 1.8, fontWeight: 300 }}>{feature.description}</p>
                 </motion.div>
               );
             })}
@@ -259,30 +210,60 @@ export default function AppPage() {
         </div>
       </section>
 
-      {/* ───── DOWNLOAD CTA ───── */}
-      <section style={{ paddingTop: "3rem", paddingBottom: "6rem", position: "relative" }}>
-        <div className="container-main" style={{ position: "relative", zIndex: 10 }}>
-          <motion.div {...fadeUp} transition={{ duration: 0.8 }} className="card-responsive" style={{ maxWidth: "600px", margin: "0 auto", borderRadius: "1.5rem", background: "linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)", border: "1px solid rgba(255,255,255,0.08)", textAlign: "center" }}>
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: "1.5rem" }}>
-              <div style={{ width: "3.5rem", height: "3.5rem", borderRadius: "1rem", background: "linear-gradient(135deg, rgba(56,189,248,0.2), rgba(167,139,250,0.2))", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Download style={{ color: "#fff" }} size={24} />
+      {/* ═══ GOGGLES INTEGRATION ═══ */}
+      <section className="section-responsive" style={{ background: "var(--surface)" }}>
+        <div className="container-main">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "3rem", alignItems: "center" }} className="product-hero-grid">
+            <motion.div {...fadeUp} transition={{ duration: 1 }} style={{ display: "flex", justifyContent: "center" }}>
+              <div style={{ maxWidth: "400px" }}>
+                <Image
+                  src="/images/goggles_nobg.png"
+                  alt="Sentio AR Goggles paired with the app"
+                  width={800}
+                  height={600}
+                  style={{ width: "100%", height: "auto", filter: "drop-shadow(0 20px 50px var(--moto-glow))" }}
+                />
               </div>
-            </div>
-            <h3 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.75rem" }}>Free. Forever.</h3>
-            <p style={{ color: "#a3a3a3", fontSize: "0.9375rem", lineHeight: 1.7, marginBottom: "2rem", maxWidth: "400px", marginLeft: "auto", marginRight: "auto" }}>
-              Every feature of the Sentio App is included at no cost. No subscriptions, no paywalls, no in-app purchases. Your data is your data.
-            </p>
-            <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", justifyContent: "center" }}>
-              <button style={{ flex: "1 1 180px", maxWidth: "220px", padding: "0.875rem", borderRadius: "9999px", background: "linear-gradient(90deg, #38bdf8, #a78bfa)", border: "none", fontSize: "0.875rem", fontWeight: 600, color: "#000", cursor: "pointer", transition: "all 0.3s" }}>
-                <Smartphone size={14} style={{ display: "inline", marginRight: "0.375rem", verticalAlign: "text-bottom" }} />
-                iOS App Store
-              </button>
-              <button style={{ flex: "1 1 180px", maxWidth: "220px", padding: "0.875rem", borderRadius: "9999px", backgroundColor: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", fontSize: "0.875rem", fontWeight: 500, color: "#fff", cursor: "pointer" }}>
-                <Smartphone size={14} style={{ display: "inline", marginRight: "0.375rem", verticalAlign: "text-bottom" }} />
-                Google Play
-              </button>
-            </div>
-          </motion.div>
+            </motion.div>
+
+            <motion.div {...fadeUp} transition={{ duration: 1, delay: 0.15 }}>
+              <p style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.3em", color: "var(--moto-accent)", marginBottom: "0.75rem", fontWeight: 600 }}>Better Together</p>
+              <h2 style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", fontWeight: 800, letterSpacing: "-0.02em", color: "var(--text-primary)", fontFamily: "var(--font-display)", marginBottom: "1rem" }}>
+                App + Goggles =<br /><span className="gradient-text-moto">Pure Flow State</span>
+              </h2>
+              <p style={{ color: "var(--text-secondary)", fontSize: "1rem", lineHeight: 1.8, fontWeight: 300, marginBottom: "1.5rem" }}>
+                When paired with Sentio AR Goggles, your app data projects directly onto your lens. Speed, squad positions, and hazard alerts — all in your field of view, without breaking focus. The app is free. The goggles are the upgrade.
+              </p>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "2rem" }}>
+                {[
+                  { icon: Zap, text: "Automatic Bluetooth pairing" },
+                  { icon: Radio, text: "Bone-conduction audio for voice pings" },
+                  { icon: Shield, text: "Emergency SOS with GPS coordinates" },
+                ].map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div key={item.text} style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                      <Icon size={16} style={{ color: "var(--moto-accent)", flexShrink: 0 }} />
+                      <span style={{ fontSize: "0.875rem", color: "var(--text-secondary)" }}>{item.text}</span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <Link
+                href="/#goggles"
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: "0.5rem",
+                  padding: "0.875rem 1.75rem", borderRadius: "9999px",
+                  background: "var(--accent-primary)", color: "var(--text-inverse)",
+                  fontWeight: 600, fontSize: "0.875rem", textDecoration: "none",
+                }}
+              >
+                Shop AR Goggles <ArrowRight size={16} />
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </section>
     </div>

@@ -2,20 +2,27 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-
-const navLinks = [
-  { label: "Technology", href: "/#technology" },
-  { label: "Moto", href: "/moto" },
-  { label: "Snow", href: "/snow" },
-  { label: "App", href: "/app" },
-];
+import ThemeToggle from "./ThemeToggle";
+import LanguageToggle from "./LanguageToggle";
+import { useCart } from "./CartContext";
+import { useLanguage } from "./LanguageContext";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { openCart, cartCount } = useCart();
+  const { t } = useLanguage();
+
+  const navLinks = [
+    { label: t("nav.goggles"), href: "/#goggles" },
+    { label: t("nav.app"), href: "/app" },
+    { label: t("nav.dirt"), href: "/moto" },
+    { label: t("nav.alpine"), href: "/snow" },
+    { label: t("nav.about"), href: "/about" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -28,111 +35,78 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-black/70 backdrop-blur-xl"
-          : "bg-transparent border-b border-white/[0.15]"
-      }`}
+      style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 50,
+        transition: "background 0.5s ease, backdrop-filter 0.5s ease, border-color 0.5s ease",
+        background: scrolled ? "var(--nav-bg-scrolled)" : "var(--nav-bg)",
+        backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+        borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
+      }}
     >
       <div className="container-nav">
-        <div className="flex items-center justify-between h-16 lg:h-20">
-          {/* Logo — left */}
-          <Link href="/" className="flex items-center gap-2.5 group" style={{ flexShrink: 0 }}>
-            <div className="relative w-14 h-14 group-hover:scale-110 transition-transform duration-300">
-              <Image
-                src="/images/Screenshot_2026-03-14_033502-removebg-preview.png"
-                alt="Sentio Logo"
-                fill
-                className="object-contain"
-                priority
-              />
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "4rem" }}>
+          <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.625rem", textDecoration: "none", flexShrink: 0 }}>
+            <div style={{ position: "relative", width: "2.75rem", height: "2.75rem" }}>
+              <Image src="/images/Screenshot_2026-03-14_033502-removebg-preview.png" alt="Sentio Logo" fill style={{ objectFit: "contain" }} priority />
             </div>
-            <span className="text-lg font-semibold tracking-tight">Sentio</span>
+            <span style={{ fontSize: "1.125rem", fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", fontFamily: "var(--font-display)" }}>Sentio</span>
           </Link>
 
-          {/* Links — center */}
-          <div className="hidden md:flex items-center gap-8" style={{ position: "absolute", left: "50%", transform: "translateX(-50%)" }}>
+          <div style={{ display: "none", alignItems: "center", gap: "2rem", position: "absolute", left: "50%", transform: "translateX(-50%)" }} className="nav-links-desktop">
             {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="text-sm text-neutral-400 hover:text-white transition-colors duration-300 relative group"
-              >
-                {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-white group-hover:w-full transition-all duration-300" />
-              </Link>
+              <Link key={link.href} href={link.href} style={{ fontSize: "0.8125rem", fontWeight: 500, color: "var(--text-secondary)", textDecoration: "none", transition: "color 0.3s", letterSpacing: "0.01em" }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = "var(--text-primary)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-secondary)"; }}
+              >{link.label}</Link>
             ))}
           </div>
 
-          {/* CTA — right */}
-          <div className="hidden md:block" style={{ flexShrink: 0 }}>
-            <Link
-              href="/moto"
-              className="text-sm font-medium hover:scale-105 transition-all duration-300"
-              style={{
-                display: "inline-block",
-                padding: "0.625rem 1.25rem",
-                borderRadius: "9999px",
-                backgroundColor: "#ffffff",
-                color: "#000000",
-              }}
-            >
-              Pre-Order
-            </Link>
-          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexShrink: 0 }}>
+            <LanguageToggle />
+            <ThemeToggle />
 
-          {/* Mobile Toggle */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden text-white p-2"
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+            <button onClick={openCart} aria-label="Open cart" style={{ position: "relative", width: "2.5rem", height: "2.5rem", borderRadius: "50%", border: "1px solid var(--border)", background: "var(--surface-elevated)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s", flexShrink: 0 }}>
+              <ShoppingBag size={17} style={{ color: "var(--text-primary)" }} />
+              {cartCount > 0 && (
+                <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} style={{ position: "absolute", top: "-3px", right: "-3px", width: "18px", height: "18px", borderRadius: "50%", backgroundColor: "#F59E0B", color: "#000", fontSize: "0.625rem", fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  {cartCount}
+                </motion.span>
+              )}
+            </button>
+
+            <Link href="/moto" className="nav-cta-desktop" style={{ display: "none", padding: "0.5rem 1.25rem", borderRadius: "9999px", backgroundColor: "var(--accent-primary)", color: "var(--text-inverse)", fontWeight: 600, fontSize: "0.8125rem", textDecoration: "none", transition: "transform 0.2s", letterSpacing: "0.01em" }}>
+              {t("nav.preorder")}
+            </Link>
+
+            <button onClick={() => setMobileOpen(!mobileOpen)} className="nav-mobile-toggle" aria-label="Toggle menu" style={{ display: "flex", padding: "0.5rem", background: "none", border: "none", cursor: "pointer" }}>
+              {mobileOpen ? <X size={22} style={{ color: "var(--text-primary)" }} /> : <Menu size={22} style={{ color: "var(--text-primary)" }} />}
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden overflow-hidden"
-            style={{ backgroundColor: "rgba(0,0,0,0.95)", backdropFilter: "blur(24px)", borderTop: "1px solid rgba(255,255,255,0.06)" }}
-          >
-            <div style={{ padding: "1.5rem" }} className="flex flex-col gap-4">
+          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.3 }} style={{ overflow: "hidden", background: "var(--bg-primary)", borderTop: "1px solid var(--border)" }}>
+            <div style={{ padding: "1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
               {navLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="text-lg text-neutral-300 hover:text-white transition-colors duration-300"
-                  style={{ paddingTop: "0.5rem", paddingBottom: "0.5rem" }}
-                >
-                  {link.label}
-                </Link>
+                <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)} style={{ fontSize: "1.0625rem", color: "var(--text-secondary)", textDecoration: "none", padding: "0.625rem 0", fontWeight: 500 }}>{link.label}</Link>
               ))}
-              <Link
-                href="/moto"
-                onClick={() => setMobileOpen(false)}
-                className="text-sm font-medium text-center"
-                style={{
-                  marginTop: "0.5rem",
-                  padding: "0.75rem 1.25rem",
-                  borderRadius: "9999px",
-                  backgroundColor: "#ffffff",
-                  color: "#000000",
-                }}
-              >
-                Pre-Order
+              <Link href="/moto" onClick={() => setMobileOpen(false)} style={{ marginTop: "0.5rem", padding: "0.875rem 1.25rem", borderRadius: "9999px", backgroundColor: "var(--accent-primary)", color: "var(--text-inverse)", fontWeight: 600, fontSize: "0.875rem", textDecoration: "none", textAlign: "center" }}>
+                {t("nav.preorder_now")}
               </Link>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      <style jsx global>{`
+        @media (min-width: 768px) {
+          .nav-links-desktop { display: flex !important; }
+          .nav-cta-desktop { display: inline-block !important; }
+          .nav-mobile-toggle { display: none !important; }
+        }
+      `}</style>
     </motion.nav>
   );
 }
