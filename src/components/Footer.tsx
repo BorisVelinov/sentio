@@ -1,114 +1,58 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowUp, Instagram, Twitter, Youtube, Github } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 
-const footerLinks = {
-  Product: [
-    { label: "Moto Edition", href: "/moto" },
-    { label: "Snow Edition", href: "/snow" },
-    { label: "Compare", href: "#" },
-    { label: "Accessories", href: "#" },
-  ],
-  Technology: [
-    { label: "OLED HUD", href: "/#technology" },
-    { label: "ESP32S3 Core", href: "/#technology" },
-    { label: "Crash Detection", href: "/#technology" },
-    { label: "Sentio App", href: "/app" },
-  ],
-  Company: [
-    { label: "About", href: "#" },
-    { label: "Careers", href: "#" },
-    { label: "Press", href: "#" },
-    { label: "Contact", href: "#" },
-  ],
-  Legal: [
-    { label: "Privacy Policy", href: "#" },
-    { label: "Terms of Service", href: "#" },
-    { label: "Warranty", href: "#" },
-    { label: "Returns", href: "#" },
-  ],
-};
-
-const socialIcons = [
-  { icon: Instagram, label: "Instagram" },
-  { icon: Twitter, label: "Twitter" },
-  { icon: Youtube, label: "YouTube" },
-  { icon: Github, label: "GitHub" },
+const columns = [
+  {
+    title: "Goggles",
+    links: [
+      { label: "Sentio Moto", href: "/moto" },
+      { label: "Sentio Snow", href: "/snow" },
+    ],
+  },
+  {
+    title: "Explore",
+    links: [
+      { label: "Technology", href: "/#technology" },
+      { label: "Safety", href: "/#safety" },
+      { label: "Sentio App", href: "/app" },
+      { label: "Questions", href: "/#questions" },
+    ],
+  },
 ];
 
 export default function Footer() {
   return (
-    <footer style={{ backgroundColor: "#000", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
-      <div className="container-main" style={{ paddingTop: "3rem", paddingBottom: "3rem" }}>
-        {/* Newsletter */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "4rem" }}
-        >
-          <h3 style={{ fontSize: "clamp(1.5rem, 3vw, 1.875rem)", fontWeight: 700, letterSpacing: "-0.02em", marginBottom: "0.75rem" }}>
-            Stay in the Loop
-          </h3>
-          <p style={{ color: "#737373", fontSize: "0.875rem", marginBottom: "2rem", maxWidth: "24rem", marginLeft: "auto", marginRight: "auto" }}>
-            Get notified about launch dates, early-bird pricing, and firmware updates.
-          </p>
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            style={{ display: "flex", flexDirection: "row", gap: "0.75rem", maxWidth: "28rem", margin: "0 auto", flexWrap: "wrap", justifyContent: "center" }}
-          >
-            <input
-              type="email"
-              placeholder="your@email.com"
-              style={{
-                flex: "1 1 200px",
-                padding: "0.75rem 1.25rem",
-                borderRadius: "9999px",
-                backgroundColor: "rgba(38,38,38,0.5)",
-                border: "1px solid rgba(255,255,255,0.06)",
-                fontSize: "0.875rem",
-                color: "#fff",
-                outline: "none",
-              }}
-            />
-            <button
-              type="submit"
-              style={{
-                padding: "0.75rem 1.5rem",
-                borderRadius: "9999px",
-                backgroundColor: "#fff",
-                color: "#000",
-                fontSize: "0.875rem",
-                fontWeight: 600,
-                border: "none",
-                cursor: "pointer",
-                transition: "all 0.3s",
-                flexShrink: 0,
-              }}
-            >
-              Subscribe
-            </button>
-          </form>
-        </motion.div>
+    <footer id="updates" className="scroll-mt-11 bg-graphite text-paper">
+      <div className="wrap pb-8 pt-16 md:pt-24">
+        <div className="grid gap-14 md:grid-cols-12">
+          <div className="md:col-span-6">
+            <h2 className="statement">Be first on the hill.</h2>
+            <p className="body-copy mt-3 max-w-md text-stone">Launch dates, early pricing and firmware updates.</p>
+            <form onSubmit={(e) => e.preventDefault()} className="mt-8 flex max-w-md border-b border-paper/40">
+              <label htmlFor="updates-email" className="sr-only">
+                Email address
+              </label>
+              <input
+                id="updates-email"
+                type="email"
+                autoComplete="email"
+                placeholder="Email address"
+                className="min-h-12 w-full bg-transparent text-base text-paper outline-none placeholder:text-stone"
+              />
+              <button type="submit" className="min-h-12 shrink-0 pl-4 text-[0.9375rem]">
+                Sign up →
+              </button>
+            </form>
+          </div>
 
-        {/* Links Grid */}
-        <div className="footer-links-grid" style={{ marginBottom: "3rem" }}>
-          {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category}>
-              <h4 style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.2em", color: "#737373", marginBottom: "1rem", fontWeight: 500 }}>
-                {category}
-              </h4>
-              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                {links.map((link) => (
+          {columns.map((column) => (
+            <div key={column.title} className="md:col-span-3">
+              <h3 className="hud-label text-stone">{column.title}</h3>
+              <ul className="mt-4">
+                {column.links.map((link) => (
                   <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      style={{ fontSize: "0.875rem", color: "#a3a3a3", textDecoration: "none", transition: "color 0.3s" }}
-                    >
+                    <Link href={link.href} className="block py-1.5 text-[0.9375rem] transition-opacity hover:opacity-60">
                       {link.label}
                     </Link>
                   </li>
@@ -118,55 +62,10 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Bottom Bar */}
-        <div className="footer-bottom">
-          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-            <div className="relative w-10 h-10">
-              <Image
-                src="/images/Screenshot_2026-03-14_033502-removebg-preview.png"
-                alt="Sentio Logo"
-                fill
-                className="object-contain"
-              />
-            </div>
-            <p style={{ fontSize: "0.75rem", color: "#737373" }}>
-              © {new Date().getFullYear()} Sentio Technologies. All rights reserved.
-            </p>
-          </div>
-
-          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-            {socialIcons.map((social) => {
-              const Icon = social.icon;
-              return (
-                <a
-                  key={social.label}
-                  href="#"
-                  aria-label={social.label}
-                  style={{
-                    width: "2.25rem",
-                    height: "2.25rem",
-                    borderRadius: "50%",
-                    backgroundColor: "rgba(255,255,255,0.04)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    transition: "all 0.3s",
-                  }}
-                >
-                  <Icon style={{ color: "#a3a3a3" }} size={16} />
-                </a>
-              );
-            })}
-          </div>
-
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="group"
-            style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.75rem", color: "#737373", background: "none", border: "none", cursor: "pointer", transition: "color 0.3s" }}
-          >
-            Back to top
-            <ArrowUp size={14} />
-          </button>
+        <div className="rule mt-16 flex items-center justify-between pt-5">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/logo.svg" alt="Sentio" width={18} height={20} className="h-5 w-auto" />
+          <p className="hud-label text-stone">© {new Date().getFullYear()} Sentio</p>
         </div>
       </div>
     </footer>

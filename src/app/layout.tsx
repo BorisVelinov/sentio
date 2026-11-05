@@ -1,14 +1,27 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Archivo, Martian_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import RevealObserver from "@/components/ui/RevealObserver";
 
-const inter = Inter({
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-archivo",
+  axes: ["wdth"],
   display: "swap",
 });
+
+const martian = Martian_Mono({
+  subsets: ["latin"],
+  variable: "--font-martian",
+  display: "swap",
+});
+
+export const viewport: Viewport = {
+  themeColor: "#0E0F11",
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: "Sentio — Vision Meets Instinct | Smart HUD Goggles",
@@ -23,9 +36,6 @@ export const metadata: Metadata = {
     "ESP32",
     "OLED HUD",
   ],
-  icons: {
-    icon: "/images/Screenshot_2026-03-15_042700-removebg-preview.png",
-  },
 };
 
 export default function RootLayout({
@@ -34,11 +44,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="font-sans bg-black text-white">
+    <html lang="en" className={`${archivo.variable} ${martian.variable}`}>
+      <body className="font-sans bg-graphite text-paper">
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <RevealObserver />
       </body>
     </html>
   );
