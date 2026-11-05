@@ -1,5 +1,5 @@
 type PhotoProps = {
-  /** File name in /images/goggles without the width suffix */
+  /** Name in /images/goggles, or a path like "stock/snow-powder", without the width suffix */
   name: string;
   /** Available widths, small first */
   widths: [number, number];
@@ -13,11 +13,12 @@ type PhotoProps = {
 /** Pre-optimised responsive photo: phones download the small file. */
 export default function Photo({ name, widths, alt, className = "", sizes = "100vw", eager = false }: PhotoProps) {
   const [small, large] = widths;
+  const base = `/images/${name.includes("/") ? name : `goggles/${name}`}`;
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={`/images/goggles/${name}-${large}.webp`}
-      srcSet={`/images/goggles/${name}-${small}.webp ${small}w, /images/goggles/${name}-${large}.webp ${large}w`}
+      src={`${base}-${large}.webp`}
+      srcSet={`${base}-${small}.webp ${small}w, ${base}-${large}.webp ${large}w`}
       sizes={sizes}
       alt={alt}
       loading={eager ? "eager" : "lazy"}

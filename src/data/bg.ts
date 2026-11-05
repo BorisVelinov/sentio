@@ -55,7 +55,7 @@ export const bg: Record<string, string> = {
   "A display that disappears until you need it. Speed, navigation and crash detection, built into the goggle itself.":
     "Дисплей, който изчезва, докато не ти потрябва. Скорост, навигация и засичане на удар, вградени в самите очила.",
   "How it works": "Как работи",
-  "Triple-layer face foam, removable and washable.": "Трислойна лицева пяна, сваляща се и подходяща за пране.",
+  "Snow in winter. Dirt the rest of the year.": "Сняг през зимата. Кал през останалото време.",
   "HUD refresh": "Опресняване на HUD",
   "Horizontal field of view": "Хоризонтално зрително поле",
   "Moto, with electronics": "Мото, с електрониката",

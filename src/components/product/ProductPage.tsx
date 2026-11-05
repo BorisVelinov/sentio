@@ -140,7 +140,7 @@ export default function ProductPage({ product: p }: { product: Product }) {
       </section>
 
       <section className="keep-tone relative h-[80svh] overflow-hidden bg-graphite md:h-[100svh]">
-        <Photo name={p.feature.photo} widths={p.feature.widths} alt={p.feature.alt} />
+        <Photo name={p.feature.photo} widths={p.feature.widths} alt={p.feature.alt} className={p.feature.focus} />
         <div
           aria-hidden
           className="absolute inset-x-0 bottom-0 h-1/2"

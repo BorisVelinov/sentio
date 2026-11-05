@@ -10,7 +10,7 @@ export type Product = {
   world: "dirt" | "snow";
   stats: { value: string; label: string }[];
   features: { title: string; text: string }[];
-  feature: { photo: string; widths: [number, number]; alt: string; line: string; note: string };
+  feature: { photo: string; widths: [number, number]; alt: string; line: string; note: string; focus?: string };
   engineeringTitle: string;
   engineering: { mark: string; title: string; text: string }[];
   fitTitle: string;
@@ -40,9 +40,10 @@ export const moto: Product = {
     { title: "HD recording", text: "1600×1200 straight to onboard flash, with up to 45 minutes of recording and no SD card." },
   ],
   feature: {
-    photo: "lens-glint",
-    widths: [700, 1100],
-    alt: "Low sun catching the edge of the Sentio lens",
+    photo: "stock/dirt-dusk",
+    focus: "object-[38%_50%]",
+    widths: [1100, 2200],
+    alt: "Silhouette of a dirt bike rider on a ridge at dusk",
     line: "38% warm amber lens. Ruts, roots and rocks stand out in flat light.",
     note: "High-contrast dirt vision",
   },

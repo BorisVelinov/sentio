@@ -22,23 +22,24 @@ export function Intro() {
           <div className="reveal md:col-span-4 md:col-start-6">
             <div className="aspect-[4/5]">
               <Photo
-                name="frame-detail"
+                name="stock/snow-powder"
                 widths={[800, 1300]}
                 sizes="(max-width: 767px) 100vw, 34vw"
-                alt="Goggle frame on granite with the lens swung open, in low evening sun"
+                alt="A rider carving a huge plume of powder down a steep snow face"
               />
             </div>
           </div>
           <div className="reveal md:col-span-3 md:mt-40">
             <div className="ml-[28%] aspect-square md:ml-0">
               <Photo
-                name="foam-detail"
-                widths={[500, 800]}
+                name="stock/dirt-night"
+                widths={[700, 1400]}
                 sizes="(max-width: 767px) 72vw, 25vw"
-                alt="Close view of the layered face foam resting on rock"
+                alt="Silhouette of a dirt bike rider kicking up sand at nightfall"
+                className="object-[80%_50%]"
               />
             </div>
-            <p className="body-copy mt-3 ml-[28%] text-ash md:ml-0"><T>Triple-layer face foam, removable and washable.</T></p>
+            <p className="body-copy mt-3 ml-[28%] text-ash md:ml-0"><T>Snow in winter. Dirt the rest of the year.</T></p>
           </div>
         </div>
 
@@ -155,10 +156,10 @@ export function Systems() {
               <h2 className="statement reveal"><T>Four systems. One frame.</T></h2>
               <div className="reveal mt-8 aspect-[3/2] md:mr-10">
                 <Photo
-                  name="lens-detail"
+                  name="stock/snow-skier"
                   widths={[800, 1400]}
                   sizes="(max-width: 767px) 100vw, 46vw"
-                  alt="Close view of the dark cylindrical lens, reflecting the evening sky and rock"
+                  alt="A skier throwing up powder on a bright mountain slope"
                 />
               </div>
             </div>
