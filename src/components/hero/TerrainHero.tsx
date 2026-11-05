@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/components/LanguageContext";
 import type { TerrainState } from "./TerrainParticles";
 
 const TerrainParticles = dynamic(() => import("./TerrainParticles"), { ssr: false });
@@ -28,6 +29,8 @@ function Word({ text }: { text: string }) {
 
 /** Three lines on a phone, two on anything wider */
 function Headline({ tone }: { tone: string }) {
+  const { lang } = useLanguage();
+  const [first, second, third] = lang === "bg" ? ["Визия", "среща", "инстинкт."] : ["Vision", "meets", "instinct."];
   return (
     <div
       data-headline
@@ -35,13 +38,13 @@ function Headline({ tone }: { tone: string }) {
       className={`absolute inset-x-0 top-[calc(44px+6svh)] text-center leading-[0.98] tracking-[-0.015em] [font-size:min(19vw,12.5svh)] md:[font-size:min(11.5vw,13.5svh)] ${tone}`}
     >
       <span className="block">
-        <Word text="Vision" />
+        <Word text={first} />
         <span className="block md:hidden" />
         <span className="hidden md:inline"> </span>
-        <Word text="meets" />
+        <Word text={second} />
       </span>
       <span className="block">
-        <Word text="instinct." />
+        <Word text={third} />
       </span>
     </div>
   );
@@ -64,6 +67,7 @@ export default function TerrainHero() {
   const slider = useRef<HTMLInputElement>(null);
   const particles = useRef<TerrainState>({ split: 0.5, tilt: TILT, velocity: 0, paused: false });
   const [motion, setMotion] = useState(false);
+  const { lang, t } = useLanguage();
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -253,12 +257,12 @@ export default function TerrainHero() {
       window.removeEventListener("resize", measure);
       input?.removeEventListener("input", onInput);
     };
-  }, []);
+  }, [lang]);
 
   return (
     <section ref={section} aria-label="Sentio goggles" className="relative h-[215svh]">
-      <div ref={stage} className="sticky top-0 h-svh touch-pan-y select-none overflow-hidden bg-graphite">
-        <h1 className="sr-only">Vision meets instinct.</h1>
+      <div ref={stage} className="keep-tone sticky top-0 h-svh touch-pan-y select-none overflow-hidden bg-graphite">
+        <h1 className="sr-only">{t("Vision meets instinct.")}</h1>
 
         {/* Revealed when the terrains part */}
         <div className="pointer-events-none absolute inset-x-0 top-[66svh] px-6 text-center md:top-[69svh]">
@@ -267,9 +271,9 @@ export default function TerrainHero() {
             className="text-paper opacity-0 will-change-transform [font-size:min(13.5vw,8svh)] md:[font-size:min(6vw,9.5svh)]"
             style={{ lineHeight: 1.02, letterSpacing: "-0.02em" }}
           >
-            Two terrains.
+            {t("Two terrains.")}
             <br />
-            One lens.
+            {t("One lens.")}
           </p>
         </div>
 
@@ -330,7 +334,7 @@ export default function TerrainHero() {
           aria-hidden
           className="hud-label absolute inset-x-0 bottom-[6.75rem] text-center text-paper md:hidden"
         >
-          ← Drag →
+          ← {t("Drag")} →
         </p>
 
         <div
@@ -340,21 +344,21 @@ export default function TerrainHero() {
           <Link href="/moto" className="hud-label py-1 text-paper">
             Sentio Moto
             <br />
-            Motocross &amp; Enduro
+            {t("Motocross & Enduro")}
             <br />
             $349 →
           </Link>
           <Link href="/snow" className="hud-label py-1 text-right text-graphite">
             Sentio Snow
             <br />
-            Ski &amp; Snowboard
+            {t("Ski & Snowboard")}
             <br />
             $379 →
           </Link>
         </div>
 
         <label className="sr-only focus-within:not-sr-only focus-within:absolute focus-within:left-1/2 focus-within:top-16 focus-within:-translate-x-1/2">
-          <span className="sr-only">Move the boundary between dirt and snow</span>
+          <span className="sr-only">{t("Move the boundary between dirt and snow")}</span>
           <input ref={slider} type="range" min={8} max={92} defaultValue={50} className="w-64" />
         </label>
       </div>

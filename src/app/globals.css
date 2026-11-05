@@ -11,7 +11,7 @@
   --color-amber: #E08A3C;
   --color-amber-deep: #A84E12;
 
-  --font-sans: var(--font-archivo), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: var(--font-archivo), var(--font-flex), system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: var(--font-martian), ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   --ease-terrain: cubic-bezier(0.22, 1, 0.36, 1);
@@ -38,6 +38,43 @@ body {
 :focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 3px;
+}
+
+/* Returning Bulgarian readers: wait for the translation instead of flashing English */
+.lang-wait body {
+  visibility: hidden;
+}
+
+/*
+ * Light mode. Dark sections turn paper-white. Anything inside .keep-tone
+ * (the hero, photography, the terrain panels) keeps its fixed colours.
+ */
+[data-theme="light"] body {
+  background-color: var(--color-paper);
+  color: var(--color-graphite);
+}
+[data-theme="light"] .bg-graphite:not(.btn, .keep-tone, .keep-tone *) {
+  background-color: var(--color-paper);
+}
+[data-theme="light"] .bg-coal:not(.keep-tone, .keep-tone *) {
+  background-color: #e6e4de;
+}
+[data-theme="light"] .text-paper:not(.btn, .keep-tone, .keep-tone *) {
+  color: var(--color-graphite);
+}
+[data-theme="light"] .text-stone:not(.keep-tone, .keep-tone *) {
+  color: var(--color-ash);
+}
+[data-theme="light"] .text-amber:not(.keep-tone, .keep-tone *) {
+  color: var(--color-amber-deep);
+}
+[data-theme="light"] .border-paper,
+[data-theme="light"] .border-paper\/40,
+[data-theme="light"] .border-paper\/15 {
+  border-color: color-mix(in srgb, var(--color-graphite) 25%, transparent);
+}
+[data-theme="light"] .logo-mark {
+  filter: invert(1);
 }
 
 /* Page gutter */

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import T from "@/components/ui/T";
 
 export const metadata: Metadata = {
   title: "Sentio Support",
@@ -43,14 +44,14 @@ export default function SupportPage() {
   return (
     <div className="bg-paper text-graphite">
       <section className="wrap pb-14 pt-[calc(44px+12svh)] md:pb-20">
-        <p className="hud-label text-ash">Support</p>
-        <h1 className="mt-3 leading-[1] tracking-[-0.02em] [font-size:clamp(2.75rem,7vw,6.5rem)]">We&apos;ve got you.</h1>
+        <p className="hud-label text-ash"><T>Support</T></p>
+        <h1 className="mt-3 leading-[1] tracking-[-0.02em] [font-size:clamp(2.75rem,7vw,6.5rem)]"><T>We&apos;ve got you.</T></h1>
         <dl className="mt-14 grid gap-y-8 md:mt-24 md:grid-cols-3 md:gap-x-8">
           {promises.map((p) => (
             <div key={p.title} className="rule pt-4">
-              <dd className="text-[clamp(3rem,6vw,5.5rem)] leading-none tracking-[-0.03em]">{p.mark}</dd>
-              <dt className="mt-3 text-xl tracking-tight">{p.title}</dt>
-              <dd className="body-copy mt-1 text-ash">{p.text}</dd>
+              <dd className="text-[clamp(3rem,6vw,5.5rem)] leading-none tracking-[-0.03em]"><T>{p.mark}</T></dd>
+              <dt className="mt-3 text-xl tracking-tight"><T>{p.title}</T></dt>
+              <dd className="body-copy mt-1 text-ash"><T>{p.text}</T></dd>
             </div>
           ))}
         </dl>
@@ -59,21 +60,19 @@ export default function SupportPage() {
       <section className="wrap pb-20 pt-8 md:pb-32 md:pt-16">
         <div className="grid gap-y-8 md:grid-cols-12 md:gap-x-8">
           <div className="md:col-span-5">
-            <h2 className="statement">Setup and care</h2>
-            <Link href="/#questions" className="link-arrow mt-4">
-              More questions
-            </Link>
+            <h2 className="statement"><T>Setup and care</T></h2>
+            <Link href="/#questions" className="link-arrow mt-4"><T>More questions</T></Link>
           </div>
           <div className="md:col-span-7">
             {topics.map((t) => (
               <details key={t.q} className="rule">
                 <summary className="flex min-h-16 items-center justify-between gap-6 py-4 text-lg tracking-tight md:text-xl">
-                  {t.q}
+                  <T>{t.q}</T>
                   <span aria-hidden className="plus shrink-0 text-2xl font-light leading-none">
                     +
                   </span>
                 </summary>
-                <p className="body-copy max-w-xl pb-6 text-ash">{t.a}</p>
+                <p className="body-copy max-w-xl pb-6 text-ash"><T>{t.a}</T></p>
               </details>
             ))}
           </div>
@@ -84,23 +83,21 @@ export default function SupportPage() {
         <div className="wrap band">
           <div className="grid gap-y-8 md:grid-cols-12 md:gap-x-8">
             <div className="md:col-span-5">
-              <h2 className="statement reveal">Talk to us.</h2>
-              <p className="body-copy mt-2 text-stone">Questions before you order, or help after you ride.</p>
+              <h2 className="statement reveal"><T>Talk to us.</T></h2>
+              <p className="body-copy mt-2 text-stone"><T>Questions before you order, or help after you ride.</T></p>
             </div>
             <dl className="md:col-span-7">
               <div className="rule py-4">
-                <dt className="hud-label text-stone">Email</dt>
+                <dt className="hud-label text-stone"><T>Email</T></dt>
                 <dd className="mt-1">
                   <a
                     href="mailto:sentio2026@gmail.com"
                     className="inline-block py-1 text-[clamp(1.375rem,2.6vw,2.25rem)] tracking-tight transition-opacity hover:opacity-60"
-                  >
-                    sentio2026@gmail.com
-                  </a>
+                  ><T>sentio2026@gmail.com</T></a>
                 </dd>
               </div>
               <div className="rule py-4">
-                <dt className="hud-label text-stone">Phone</dt>
+                <dt className="hud-label text-stone"><T>Phone</T></dt>
                 <dd className="mt-1">
                   <a
                     href="tel:0879320806"

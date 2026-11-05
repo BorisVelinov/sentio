@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "@/components/LanguageContext";
 import Oled, { type Widget } from "@/components/ui/Oled";
 
 const widgets: { name: Widget; text: string }[] = [
@@ -20,6 +21,7 @@ const presets: { name: string; widgets: Widget[] }[] = [
 
 export default function HudEditor() {
   const [active, setActive] = useState<Widget[]>(presets[0].widgets);
+  const { t } = useLanguage();
 
   const toggle = (name: Widget) => {
     setActive((list) => {
@@ -31,13 +33,13 @@ export default function HudEditor() {
   return (
     <section className="bg-coal">
       <div className="wrap band">
-        <h2 className="statement max-w-2xl">Your display, your rules.</h2>
-        <p className="body-copy mt-2 max-w-md text-stone">Choose up to three readouts. The first one runs large. Try it.</p>
+        <h2 className="statement max-w-2xl">{t("Your display, your rules.")}</h2>
+        <p className="body-copy mt-2 max-w-md text-stone">{t("Choose up to three readouts. The first one runs large. Try it.")}</p>
 
         <div className="mt-10 grid gap-y-8 md:mt-16 md:grid-cols-12 md:gap-x-8">
           <div className="sticky top-11 z-10 -mx-[clamp(1.25rem,4vw,4rem)] self-start bg-coal md:static md:col-span-7 md:mx-0 md:self-start">
             <Oled widgets={active} label={`HUD preview showing ${active.join(", ")}`} />
-            <div className="flex gap-5 px-[clamp(1.25rem,4vw,4rem)] md:px-0" role="group" aria-label="Layout presets">
+            <div className="flex gap-5 px-[clamp(1.25rem,4vw,4rem)] md:px-0" role="group" aria-label={t("Layout presets")}>
               {presets.map((p) => {
                 const on = p.widgets.join() === active.join();
                 return (
@@ -48,7 +50,7 @@ export default function HudEditor() {
                     onClick={() => setActive(p.widgets)}
                     className={`hud-label min-h-11 border-b ${on ? "border-paper text-paper" : "border-transparent text-stone"}`}
                   >
-                    {p.name}
+                    {t(p.name)}
                   </button>
                 );
               })}
@@ -67,10 +69,10 @@ export default function HudEditor() {
                     className="flex min-h-16 w-full items-center justify-between gap-4 py-3 text-left"
                   >
                     <span>
-                      <span className={`block text-xl tracking-tight ${on ? "text-paper" : "text-stone"}`}>{w.name}</span>
-                      <span className="body-copy block text-stone">{w.text}</span>
+                      <span className={`block text-xl tracking-tight ${on ? "text-paper" : "text-stone"}`}>{t(w.name)}</span>
+                      <span className="body-copy block text-stone">{t(w.text)}</span>
                     </span>
-                    <span className="hud-label shrink-0 text-amber">{on ? `On ${active.indexOf(w.name) + 1}` : "Add"}</span>
+                    <span className="hud-label shrink-0 text-amber">{on ? `${t("On")} ${active.indexOf(w.name) + 1}` : t("Add")}</span>
                   </button>
                 </li>
               );

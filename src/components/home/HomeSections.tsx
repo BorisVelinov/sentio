@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Photo from "@/components/ui/Photo";
 import HudShowcase from "./HudShowcase";
+import T from "@/components/ui/T";
 
 const stats = [
   { value: "60", unit: "fps", label: "HUD refresh" },
@@ -15,13 +16,8 @@ export function Intro() {
       <div className="wrap band">
         <div className="grid gap-y-12 md:grid-cols-12 md:gap-x-8">
           <div className="reveal md:col-span-5 md:pt-4">
-            <h2 className="statement">
-              A display that disappears until you need it. Speed, navigation and crash detection, built into the goggle
-              itself.
-            </h2>
-            <Link href="/#technology" className="link-arrow mt-6">
-              How it works
-            </Link>
+            <h2 className="statement"><T>A display that disappears until you need it. Speed, navigation and crash detection, built into the goggle itself.</T></h2>
+            <Link href="/#technology" className="link-arrow mt-6"><T>How it works</T></Link>
           </div>
           <div className="reveal md:col-span-4 md:col-start-6">
             <div className="aspect-[4/5]">
@@ -42,7 +38,7 @@ export function Intro() {
                 alt="Close view of the layered face foam resting on rock"
               />
             </div>
-            <p className="body-copy mt-3 ml-[28%] text-ash md:ml-0">Triple-layer face foam, removable and washable.</p>
+            <p className="body-copy mt-3 ml-[28%] text-ash md:ml-0"><T>Triple-layer face foam, removable and washable.</T></p>
           </div>
         </div>
 
@@ -51,9 +47,9 @@ export function Intro() {
             <div key={s.label} className="reveal rule pt-4">
               <dd className="text-[clamp(2.75rem,5.5vw,5rem)] leading-none tracking-[-0.03em]">
                 {s.value}
-                <span className="ml-1 text-[0.4em] tracking-normal">{s.unit}</span>
+                <span className="ml-1 text-[0.4em] tracking-normal"><T>{s.unit}</T></span>
               </dd>
-              <dt className="hud-label mt-3 text-ash">{s.label}</dt>
+              <dt className="hud-label mt-3 text-ash"><T>{s.label}</T></dt>
             </div>
           ))}
         </dl>
@@ -64,7 +60,7 @@ export function Intro() {
 
 export function FullBleed() {
   return (
-    <section className="relative h-[82svh] overflow-hidden bg-graphite md:h-[100svh]">
+    <section className="keep-tone relative h-[82svh] overflow-hidden bg-graphite md:h-[100svh]">
       <Photo
         name="wide-rock"
         widths={[1100, 2200]}
@@ -77,8 +73,8 @@ export function FullBleed() {
         style={{ background: "linear-gradient(to top, rgba(14,15,17,0.75), transparent)" }}
       />
       <div className="wrap absolute inset-x-0 bottom-0 pb-8 md:pb-12">
-        <p className="statement reveal max-w-3xl text-paper">Eight magnets hold the lens. Ten seconds to swap it, gloves on.</p>
-        <p className="hud-label mt-3 text-paper/80">Magnetic lens system, Sentio Snow</p>
+        <p className="statement reveal max-w-3xl text-paper"><T>Eight magnets hold the lens. Ten seconds to swap it, gloves on.</T></p>
+        <p className="hud-label mt-3 text-paper/80"><T>Magnetic lens system, Sentio Snow</T></p>
       </div>
     </section>
   );
@@ -106,7 +102,7 @@ export function Technology() {
   return (
     <section id="technology" className="scroll-mt-11 bg-graphite text-paper">
       <div className="wrap pb-10 pt-20 md:pb-16 md:pt-40">
-        <h2 className="statement reveal max-w-3xl">Everything you need to know, in the corner of your eye.</h2>
+        <h2 className="statement reveal max-w-3xl"><T>Everything you need to know, in the corner of your eye.</T></h2>
       </div>
       <div className="reveal mx-auto md:w-[min(100%-8vw,118svh)]">
         <HudShowcase />
@@ -115,9 +111,9 @@ export function Technology() {
         <div className="grid gap-y-10 md:grid-cols-3 md:gap-x-8">
           {tech.map((t) => (
             <div key={t.title} className="reveal rule pt-4">
-              <h3 className="text-xl tracking-tight md:text-2xl">{t.title}</h3>
-              <p className="body-copy mt-2 max-w-sm text-stone">{t.text}</p>
-              <p className="hud-label mt-4 text-stone">{t.note}</p>
+              <h3 className="text-xl tracking-tight md:text-2xl"><T>{t.title}</T></h3>
+              <p className="body-copy mt-2 max-w-sm text-stone"><T>{t.text}</T></p>
+              <p className="hud-label mt-4 text-stone"><T>{t.note}</T></p>
             </div>
           ))}
         </div>
@@ -156,7 +152,7 @@ export function Systems() {
         <div className="grid gap-y-12 md:grid-cols-12 md:gap-x-8">
           <div className="md:col-span-6">
             <div className="md:sticky md:top-24">
-              <h2 className="statement reveal">Four systems. One frame.</h2>
+              <h2 className="statement reveal"><T>Four systems. One frame.</T></h2>
               <div className="reveal mt-8 aspect-[3/2] md:mr-10">
                 <Photo
                   name="lens-detail"
@@ -170,9 +166,9 @@ export function Systems() {
           <ul className="md:col-span-6 md:pt-2">
             {systems.map((s) => (
               <li key={s.name} className="reveal rule pb-10 pt-4 md:pb-16">
-                <h3 className="text-[clamp(1.5rem,2.4vw,2.25rem)] tracking-tight">{s.name}</h3>
-                <p className="body-copy mt-2 max-w-md text-ash">{s.text}</p>
-                <p className="hud-label mt-3 text-ash">{s.spec}</p>
+                <h3 className="text-[clamp(1.5rem,2.4vw,2.25rem)] tracking-tight"><T>{s.name}</T></h3>
+                <p className="body-copy mt-2 max-w-md text-ash"><T>{s.text}</T></p>
+                <p className="hud-label mt-3 text-ash"><T>{s.spec}</T></p>
               </li>
             ))}
           </ul>
@@ -193,14 +189,14 @@ export function Safety() {
   return (
     <section id="safety" className="scroll-mt-11 bg-coal text-paper">
       <div className="wrap band">
-        <p className="hud-label reveal text-amber">Safety</p>
-        <h2 className="statement reveal mt-3 max-w-3xl">The one time you can&apos;t call for help, your goggles do.</h2>
+        <p className="hud-label reveal text-amber"><T>Safety</T></p>
+        <h2 className="statement reveal mt-3 max-w-3xl"><T>The one time you can&apos;t call for help, your goggles do.</T></h2>
         <ol className="mt-14 grid gap-y-10 md:mt-24 md:grid-cols-4 md:gap-x-8">
           {sos.map((s) => (
             <li key={s.title} className="reveal rule pt-4">
-              <p className="text-[clamp(2.5rem,4.2vw,4rem)] leading-none tracking-[-0.03em]">{s.mark}</p>
-              <h3 className="mt-5 text-lg tracking-tight">{s.title}</h3>
-              <p className="body-copy mt-1 max-w-xs text-stone">{s.text}</p>
+              <p className="text-[clamp(2.5rem,4.2vw,4rem)] leading-none tracking-[-0.03em]"><T>{s.mark}</T></p>
+              <h3 className="mt-5 text-lg tracking-tight"><T>{s.title}</T></h3>
+              <p className="body-copy mt-1 max-w-xs text-stone"><T>{s.text}</T></p>
             </li>
           ))}
         </ol>
@@ -216,7 +212,7 @@ const editions = [
 
 export function Editions() {
   return (
-    <section className="bg-paper md:flex">
+    <section className="keep-tone bg-paper md:flex">
       {editions.map((e, i) => (
         <Link
           key={e.name}
@@ -243,13 +239,13 @@ export function Editions() {
           {/* eslint-enable @next/next/no-img-element */}
           <div className={`absolute inset-x-0 top-0 p-5 md:p-8 ${i === 1 ? "md:pl-[calc(2rem+7vw)]" : ""}`}>
             <h2 className="statement">{e.name}</h2>
-            <p className="body-copy mt-1">{e.line}</p>
+            <p className="body-copy mt-1"><T>{e.line}</T></p>
           </div>
           <div
             className={`absolute inset-x-0 bottom-0 flex items-end justify-between p-5 md:p-8 ${i === 0 ? "md:pr-[calc(2rem+7vw)]" : ""}`}
           >
             <p className="text-xl tracking-tight">{e.price}</p>
-            <span className="link-arrow">Explore</span>
+            <span className="link-arrow"><T>Explore</T></span>
           </div>
         </Link>
       ))}
@@ -279,15 +275,15 @@ export function Reviews() {
   return (
     <section className="bg-paper text-graphite">
       <div className="wrap band">
-        <h2 className="hud-label reveal text-ash">Riders</h2>
+        <h2 className="hud-label reveal text-ash"><T>Riders</T></h2>
         <ul className="mt-6">
           {reviews.map((r) => (
             <li key={r.name} className="reveal rule grid gap-y-4 py-8 md:grid-cols-12 md:gap-x-8 md:py-12">
-              <blockquote className="statement md:col-span-9">{r.quote}</blockquote>
+              <blockquote className="statement md:col-span-9"><T>{r.quote}</T></blockquote>
               <p className="hud-label text-ash md:col-span-3 md:pt-3 md:text-right">
                 {r.name}
                 <br />
-                {r.role}
+                <T>{r.role}</T>
               </p>
             </li>
           ))}
@@ -329,17 +325,17 @@ export function Questions() {
     <section id="questions" className="scroll-mt-11 bg-paper text-graphite">
       <div className="wrap band !pt-0">
         <div className="grid gap-y-8 md:grid-cols-12 md:gap-x-8">
-          <h2 className="statement reveal md:col-span-5">Questions</h2>
+          <h2 className="statement reveal md:col-span-5"><T>Questions</T></h2>
           <div className="md:col-span-7">
             {faqs.map((f) => (
               <details key={f.q} className="rule group">
                 <summary className="flex min-h-16 items-center justify-between gap-6 py-4 text-lg tracking-tight md:text-xl">
-                  {f.q}
+                  <T>{f.q}</T>
                   <span aria-hidden className="plus shrink-0 text-2xl font-light leading-none">
                     +
                   </span>
                 </summary>
-                <p className="body-copy max-w-xl pb-6 text-ash">{f.a}</p>
+                <p className="body-copy max-w-xl pb-6 text-ash"><T>{f.a}</T></p>
               </details>
             ))}
           </div>

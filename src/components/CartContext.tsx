@@ -2,6 +2,9 @@
 
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
 
+/** Bumped so carts saved with old prices and images are not restored */
+const STORAGE_KEY = "sentio-cart-v2";
+
 export interface CartItem {
   id: string;
   name: string;
@@ -47,7 +50,7 @@ export default function CartProvider({ children }: { children: React.ReactNode }
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem("sentio-cart");
+    const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       try {
         setCart(JSON.parse(stored));
@@ -58,7 +61,7 @@ export default function CartProvider({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     if (mounted) {
-      localStorage.setItem("sentio-cart", JSON.stringify(cart));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
     }
   }, [cart, mounted]);
 

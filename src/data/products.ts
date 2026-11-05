@@ -5,6 +5,8 @@ export type Product = {
   headline: string;
   intro: string;
   price: string;
+  /** Price as a number, for the cart */
+  amount: number;
   world: "dirt" | "snow";
   stats: { value: string; label: string }[];
   features: { title: string; text: string }[];
@@ -23,6 +25,7 @@ export const moto: Product = {
   headline: "Born for the dirt.",
   intro: "Dust-protected electronics, a vibration-dampened HUD and a ballistic-rated lens, in one 185 g goggle.",
   price: "$349",
+  amount: 349,
   world: "dirt",
   stats: [
     { value: "185 g", label: "Lens, frame and electronics" },
@@ -83,6 +86,7 @@ export const snow: Product = {
   headline: "Made for the mountain.",
   intro: "Dual-pane heated anti-fog, a thermally insulated battery and UV400 protection, in one 195 g goggle.",
   price: "$379",
+  amount: 379,
   world: "snow",
   stats: [
     { value: "195 g", label: "Lens, frame and electronics" },

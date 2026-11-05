@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Photo from "@/components/ui/Photo";
+import T from "@/components/ui/T";
 
 export const metadata: Metadata = {
   title: "About Sentio",
@@ -32,10 +33,8 @@ export default function AboutPage() {
   return (
     <div className="bg-graphite text-paper">
       <section className="wrap pb-14 pt-[calc(44px+12svh)] md:pb-20">
-        <p className="hud-label text-stone">About Sentio</p>
-        <h1 className="mt-3 max-w-5xl leading-[1] tracking-[-0.02em] [font-size:clamp(2.75rem,7vw,6.5rem)]">
-          Riders shouldn&apos;t have to look away.
-        </h1>
+        <p className="hud-label text-stone"><T>About Sentio</T></p>
+        <h1 className="mt-3 max-w-5xl leading-[1] tracking-[-0.02em] [font-size:clamp(2.75rem,7vw,6.5rem)]"><T>Riders shouldn&apos;t have to look away.</T></h1>
       </section>
 
       <section className="relative h-[70svh] overflow-hidden md:h-[92svh]">
@@ -51,23 +50,18 @@ export default function AboutPage() {
       <section className="bg-paper text-graphite">
         <div className="wrap band">
           <div className="grid gap-y-8 md:grid-cols-12 md:gap-x-8">
-            <p className="hud-label reveal text-ash md:col-span-4 md:pt-3">Why we exist</p>
+            <p className="hud-label reveal text-ash md:col-span-4 md:pt-3"><T>Why we exist</T></p>
             <div className="md:col-span-8">
-              <p className="statement reveal">
-                The best riders never look down. So we asked a simple question: what if the numbers came to you?
-              </p>
-              <p className="body-copy reveal mt-6 max-w-xl text-ash">
-                Sentio began with a goggle, a tiny display and one rule: nothing gets added unless it helps you ride.
-                Everything else was left on the bench.
-              </p>
+              <p className="statement reveal"><T>The best riders never look down. So we asked a simple question: what if the numbers came to you?</T></p>
+              <p className="body-copy reveal mt-6 max-w-xl text-ash"><T>Sentio began with a goggle, a tiny display and one rule: nothing gets added unless it helps you ride. Everything else was left on the bench.</T></p>
             </div>
           </div>
 
           <dl className="mt-16 grid gap-y-8 md:mt-28 md:grid-cols-3 md:gap-x-8">
             {numbers.map((n) => (
               <div key={n.label} className="reveal rule pt-4">
-                <dd className="text-[clamp(3rem,6vw,5.5rem)] leading-none tracking-[-0.03em]">{n.value}</dd>
-                <dt className="hud-label mt-3 text-ash">{n.label}</dt>
+                <dd className="text-[clamp(3rem,6vw,5.5rem)] leading-none tracking-[-0.03em]"><T>{n.value}</T></dd>
+                <dt className="hud-label mt-3 text-ash"><T>{n.label}</T></dt>
               </div>
             ))}
           </dl>
@@ -76,18 +70,16 @@ export default function AboutPage() {
 
       <section>
         <div className="wrap band">
-          <h2 className="statement reveal">What we believe.</h2>
+          <h2 className="statement reveal"><T>What we believe.</T></h2>
           <ul className="mt-12 grid gap-y-8 md:mt-20 md:grid-cols-3 md:gap-x-8">
             {beliefs.map((b) => (
               <li key={b.title} className="reveal rule pt-4">
-                <h3 className="text-xl tracking-tight md:text-2xl">{b.title}</h3>
-                <p className="body-copy mt-2 max-w-sm text-stone">{b.text}</p>
+                <h3 className="text-xl tracking-tight md:text-2xl"><T>{b.title}</T></h3>
+                <p className="body-copy mt-2 max-w-sm text-stone"><T>{b.text}</T></p>
               </li>
             ))}
           </ul>
-          <Link href="/compare" className="link-arrow mt-12">
-            Find your goggle
-          </Link>
+          <Link href="/compare" className="link-arrow mt-12"><T>Find your goggle</T></Link>
         </div>
       </section>
     </div>
