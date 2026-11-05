@@ -1,4 +1,5 @@
 import Link from "next/link";
+import GroundedGoggle from "@/components/ui/GroundedGoggle";
 import Photo from "@/components/ui/Photo";
 import HudShowcase from "./HudShowcase";
 import T from "@/components/ui/T";
@@ -231,13 +232,13 @@ export function Editions() {
             loading="lazy"
             className="absolute inset-0 h-full w-full object-cover"
           />
-          <img
-            src="/images/goggles/goggle-1100.webp"
+          {/* eslint-enable @next/next/no-img-element */}
+          <GroundedGoggle
+            world={e.world as "dirt" | "snow"}
             alt=""
-            loading="lazy"
+            sizes="(max-width: 767px) 88vw, 44vw"
             className="absolute left-1/2 top-[56%] w-[88%] max-w-[44rem] -translate-x-1/2 -translate-y-1/2 transition-transform duration-700 ease-[var(--ease-terrain)] group-hover:scale-[1.03]"
           />
-          {/* eslint-enable @next/next/no-img-element */}
           <div className={`absolute inset-x-0 top-0 p-5 md:p-8 ${i === 1 ? "md:pl-[calc(2rem+7vw)]" : ""}`}>
             <h2 className="statement">{e.name}</h2>
             <p className="body-copy mt-1"><T>{e.line}</T></p>
