@@ -23,6 +23,10 @@ export default function ProductPage({ product: p }: { product: Product }) {
   const solid = moto ? "bg-amber text-graphite" : "bg-graphite text-paper";
   const display = moto ? '"wdth" 70, "wght" 780' : '"wdth" 118, "wght" 280';
   const heroTone = moto ? "text-paper" : "text-graphite";
+  // Grounds the photo in each world: a contact shadow and a slight colour match
+  const shadow = moto ? "rgba(38, 10, 2, 0.72)" : "rgba(38, 62, 96, 0.5)";
+  const tint = moto ? "rgba(214, 92, 30, 0.5)" : "rgba(120, 170, 225, 0.6)";
+  const grade = moto ? "saturate(1.05)" : "saturate(0.72) brightness(1.05)";
 
   return (
     <div className={page}>
@@ -35,14 +39,35 @@ export default function ProductPage({ product: p }: { product: Product }) {
           className="absolute inset-0 h-full w-full object-cover"
         />
         <HeroWeather kind={p.world} />
-        <img
-          src="/images/goggles/goggle-2000.webp"
-          srcSet="/images/goggles/goggle-1100.webp 1100w, /images/goggles/goggle-2000.webp 2000w"
-          sizes="(max-width: 767px) 100vw, 50vw"
-          alt={`${p.name} goggle`}
-          fetchPriority="high"
-          className="absolute left-1/2 top-[56%] w-[min(104vw,62svh)] max-w-none -translate-x-1/2 -translate-y-1/2 md:top-[64%] md:w-[min(44vw,72svh)]"
-        />
+        <div className="absolute left-1/2 top-[56%] aspect-[2000/1325] w-[min(104vw,62svh)] -translate-x-1/2 -translate-y-1/2 md:top-[64%] md:w-[min(44vw,72svh)]">
+          <div
+            aria-hidden
+            className="absolute -bottom-[11%] left-[3%] h-[30%] w-[96%]"
+            style={{ background: `radial-gradient(closest-side, ${shadow}, transparent)` }}
+          />
+          <img
+            src="/images/goggles/goggle-2000.webp"
+            srcSet="/images/goggles/goggle-1100.webp 1100w, /images/goggles/goggle-2000.webp 2000w"
+            sizes="(max-width: 767px) 100vw, 44vw"
+            alt={`${p.name} goggle`}
+            fetchPriority="high"
+            className="absolute inset-0 h-full w-full"
+            style={{ filter: grade }}
+          />
+          {/* Colour of the surrounding world, kept inside the goggle's outline */}
+          <div
+            aria-hidden
+            className="absolute inset-0"
+            style={{
+              background: tint,
+              mixBlendMode: "soft-light",
+              maskImage: "url(/images/goggles/goggle-1100.webp)",
+              WebkitMaskImage: "url(/images/goggles/goggle-1100.webp)",
+              maskSize: "100% 100%",
+              WebkitMaskSize: "100% 100%",
+            }}
+          />
+        </div>
         {/* eslint-enable @next/next/no-img-element */}
         <div className="wrap relative pt-[5svh] md:pt-[6svh]">
           <p className="hud-label">
