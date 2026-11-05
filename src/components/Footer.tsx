@@ -8,6 +8,7 @@ const columns = [
     links: [
       { label: "Sentio Moto", href: "/moto" },
       { label: "Sentio Snow", href: "/snow" },
+      { label: "Compare", href: "/compare" },
     ],
   },
   {
@@ -16,7 +17,9 @@ const columns = [
       { label: "Technology", href: "/#technology" },
       { label: "Safety", href: "/#safety" },
       { label: "Sentio App", href: "/app" },
-      { label: "Questions", href: "/#questions" },
+      { label: "About", href: "/about" },
+      { label: "Support", href: "/support" },
+      { label: "Contact", href: "/support#contact" },
     ],
   },
 ];

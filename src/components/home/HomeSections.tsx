@@ -216,12 +216,16 @@ const editions = [
 
 export function Editions() {
   return (
-    <section className="grid md:grid-cols-2">
-      {editions.map((e) => (
+    <section className="bg-paper md:flex">
+      {editions.map((e, i) => (
         <Link
           key={e.name}
           href={e.href}
-          className={`group relative block h-[78svh] overflow-hidden md:h-[92svh] ${e.tone}`}
+          className={`group relative block h-[78svh] overflow-hidden md:h-[92svh] md:w-[calc(50%+3.5vw)] ${
+            i === 0
+              ? "md:[clip-path:polygon(0_0,100%_0,calc(100%-7vw)_100%,0_100%)]"
+              : "md:-ml-[7vw] md:[clip-path:polygon(7vw_0,100%_0,100%_100%,0_100%)]"
+          } ${e.tone}`}
         >
           {/* eslint-disable @next/next/no-img-element */}
           <img
@@ -237,11 +241,13 @@ export function Editions() {
             className="absolute left-1/2 top-[56%] w-[88%] max-w-[44rem] -translate-x-1/2 -translate-y-1/2 transition-transform duration-700 ease-[var(--ease-terrain)] group-hover:scale-[1.03]"
           />
           {/* eslint-enable @next/next/no-img-element */}
-          <div className="absolute inset-x-0 top-0 p-5 md:p-8">
+          <div className={`absolute inset-x-0 top-0 p-5 md:p-8 ${i === 1 ? "md:pl-[calc(2rem+7vw)]" : ""}`}>
             <h2 className="statement">{e.name}</h2>
             <p className="body-copy mt-1">{e.line}</p>
           </div>
-          <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 md:p-8">
+          <div
+            className={`absolute inset-x-0 bottom-0 flex items-end justify-between p-5 md:p-8 ${i === 0 ? "md:pr-[calc(2rem+7vw)]" : ""}`}
+          >
             <p className="text-xl tracking-tight">{e.price}</p>
             <span className="link-arrow">Explore</span>
           </div>

@@ -1,3 +1,4 @@
+import HeroWeather from "@/components/product/HeroWeather";
 import Photo from "@/components/ui/Photo";
 import type { Product } from "@/data/products";
 
@@ -30,6 +31,7 @@ export default function ProductPage({ product: p }: { product: Product }) {
           fetchPriority="high"
           className="absolute inset-0 h-full w-full object-cover"
         />
+        <HeroWeather kind={p.world} />
         <img
           src="/images/goggles/goggle-2000.webp"
           srcSet="/images/goggles/goggle-1100.webp 1100w, /images/goggles/goggle-2000.webp 2000w"
